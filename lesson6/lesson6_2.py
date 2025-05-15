@@ -1,0 +1,1 @@
+print(vars(__name__))
