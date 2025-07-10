@@ -4,9 +4,16 @@ from markupsafe import escape
 app = Flask(__name__)
 
 @app.route("/")
-def index():
-    return "<h1>您好, 全世界!!!</h1>"
+def index(question:str=''):
+    if question=='':
+        return "<h1>我是Gemini的小助手</h1>"
+    else:
+       client = genai.Client()
 
-@app.route("/user/<name>")
-def show_name(name):
-    return f"<h1>您好, {escape(name)}</h1>"
+response = client.models.generate_content(
+    model="gemini-2.5-flash",
+    contents=f"{question},回答請輸出成為html格式",
+) 
+html_format = response.text
+html_format = response.text.replace("```html","").replace("```","")
+return html_format
