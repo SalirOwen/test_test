@@ -1,9 +1,11 @@
 from flask import Flask
 from markupsafe import escape
+from google import genai
 
 app = Flask(__name__)
 
 @app.route("/")
+@app.route("/<string:question>")
 def index(question:str=''):
     if question=='':
         return "<h1>我是Gemini的小助手</h1>"
